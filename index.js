@@ -62,3 +62,60 @@ document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () =
 $("search").addEventListener("input", render);
 $("area").addEventListener("change", render);
 render();
+const auth = document.getElementById("auth");
+const current = JSON.parse(localStorage.getItem("currentUser"));
+
+if (current) {
+  auth.textContent = "";
+
+  const hello = document.createElement("span");
+  hello.textContent = "Hi, " + current.name + " ";
+
+  const logout = document.createElement("a");
+  logout.href = "#";
+  logout.textContent = "Log out";
+  logout.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("currentUser");
+    location.reload();
+  });
+
+  auth.append(hello, logout);
+}// Change this to your card's class name (see note below)
+const CARD_SELECTOR = "#spots article, #spots li, #spots .card, #spots .spot, #spots .spot-card";
+// Create the popup once
+const overlay = document.createElement("div");
+overlay.className = "modal-overlay";
+overlay.hidden = true;
+overlay.innerHTML = `
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" aria-label="Close">&times;</button>
+    <div class="modal-body"></div>
+  </div>`;
+document.body.appendChild(overlay);
+
+const modalBody = overlay.querySelector(".modal-body");
+
+function openModal(card) {
+  modalBody.innerHTML = card.innerHTML;
+  overlay.hidden = false;
+}
+
+function closeModal() {
+  overlay.hidden = true;
+}
+
+// One listener handles every card, even ones added later
+document.addEventListener("click", (e) => {
+  const card = e.target.closest(CARD_SELECTOR);
+  if (card && !overlay.contains(card)) openModal(card);
+});
+
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay || e.target.classList.contains("modal-close")) closeModal();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
+document.addEventListener("click", (e) => console.log("clicked:", e.target));

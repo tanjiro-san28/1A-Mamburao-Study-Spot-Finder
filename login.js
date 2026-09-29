@@ -1,10 +1,66 @@
-const email = document.getElementById("email"), password = document.getElementById("password"), error = document.getElementById("error");
-document.getElementById("showPassword").addEventListener("change", e => { password.type = e.target.checked ? "text" : "password"; });
-document.getElementById("loginForm").addEventListener("submit", e => {
+let mode = "login"; // "login" or "signup"
+
+const title = document.getElementById("form-title");
+const form = document.getElementById("auth-form");
+const nameRow = document.getElementById("name-row");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const message = document.getElementById("message");
+const submitBtn = document.getElementById("submit-btn");
+const switchText = document.getElementById("switch-text");
+const switchLink = document.getElementById("switch-link");
+
+function getUsers() {
+  return JSON.parse(localStorage.getItem("users")) || [];
+}
+
+function showMessage(text, isError = true) {
+  message.textContent = text;
+  message.style.color = isError ? "crimson" : "green";
+}
+
+function updateUI() {
+  const signup = mode === "signup";
+  title.textContent = signup ? "Create account" : "Log in";
+  submitBtn.textContent = signup ? "Create account" : "Log in";
+  switchText.textContent = signup ? "Already have an account?" : "No account yet?";
+  switchLink.textContent = signup ? "Log in" : "Create account";
+  nameRow.hidden = !signup;
+  nameInput.required = signup;
+  message.textContent = "";
+}
+
+switchLink.addEventListener("click", (e) => {
   e.preventDefault();
-  if (!email.value.includes("@")) { error.textContent = "Enter a valid email address."; email.focus(); return; }
-  if (password.value.length < 6) { error.textContent = "Password must be at least 6 characters."; password.focus(); return; }
-  // Demo only: no real account check. A real login needs a backend (Firebase or Supabase).
-  localStorage.setItem("msfUser", email.value.trim());
-  window.location.href = "index.html";
+  mode = mode === "login" ? "signup" : "login";
+  updateUI();
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const email = emailInput.value.trim().toLowerCase();
+  const password = passwordInput.value;
+  const users = getUsers();
+
+  if (mode === "signup") {
+    if (users.some((u) => u.email === email)) {
+      showMessage("That email is already registered.");
+      return;
+    }
+    const name = nameInput.value.trim();
+    users.push({ name, email, password });
+    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("currentUser", JSON.stringify({ name, email }));
+    window.location.href = "index.html";
+  } else {
+    const user = users.find((u) => u.email === email && u.password === password);
+    if (!user) {
+      showMessage("Wrong email or password.");
+      return;
+    }
+    localStorage.setItem("currentUser", JSON.stringify({ name: user.name, email }));
+    window.location.href = "index.html";
+  }
 });

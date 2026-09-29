@@ -4,147 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log in | Mamburao Study Spot Finder</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-
-  <style>
-    /* Same colors as index.html so both pages match */
-    :root {
-      --paper: #f4f6f9;
-      --card: #ffffff;
-      --ink: #16233b;
-      --muted: #5b6678;
-      --line: #d9dee7;
-      --lamp: #e8a200;
-      --lamp-soft: #fff4d6;
-      --error: #b3261e;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: var(--paper);
-      /* To use your own picture, uncomment the next line:
-      background: linear-gradient(rgba(244,246,249,.85), rgba(244,246,249,.85)), url("background.png") center / cover fixed; */
-      color: var(--ink);
-      font-family: "Atkinson Hyperlegible", system-ui, Arial, sans-serif;
-      line-height: 1.5;
-    }
-
-    .login-card {
-      width: 100%;
-      max-width: 400px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-top: 6px solid var(--lamp);
-      border-radius: 6px;
-      padding: 28px 26px 24px;
-    }
-
-    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; font-weight: 700; }
-    .lamp {
-      width: 14px; height: 14px; border-radius: 50%;
-      background: var(--lamp); box-shadow: 0 0 0 4px var(--lamp-soft);
-    }
-
-    h1 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 6px; }
-    .intro { margin: 0 0 20px; color: var(--muted); }
-
-    label { display: block; font-weight: 700; margin-bottom: 4px; }
-
-    input[type="email"], input[type="password"], input[type="text"] {
-      width: 100%;
-      font: inherit;
-      padding: 10px 12px;
-      margin-bottom: 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      color: var(--ink);
-    }
-
-    .show { display: flex; align-items: center; gap: 8px; font-weight: 400; margin-bottom: 18px; }
-
-    button.login {
-      width: 100%;
-      font: inherit; font-weight: 700;
-      padding: 11px;
-      border: 0; border-radius: 8px;
-      background: var(--ink); color: #fff;
-      cursor: pointer;
-    }
-    button.login:hover { background: #24365a; }
-
-    :focus-visible { outline: 3px solid var(--lamp); outline-offset: 2px; }
-
-    .error { min-height: 1.5em; margin: 0 0 10px; color: var(--error); font-size: .95rem; }
-
-    .links { margin: 18px 0 0; text-align: center; color: var(--muted); font-size: .95rem; }
-    .links a { color: var(--ink); }
-  </style>
+  <link rel="stylesheet" href="login.css">
 </head>
-
 <body>
-  <main class="login-card">
-    <div class="brand"><span class="lamp"></span>Mamburao Study Spot Finder</div>
+  <main class="auth-card">
+    <h1 id="form-title">Log in</h1>
 
-    <h1>Log in</h1>
-    <p class="intro">Log in to save your favorite study spots.</p>
+    <form id="auth-form">
+      <div id="name-row" hidden>
+        <label for="name">Name</label>
+        <input type="text" id="name">
+      </div>
 
-    <form id="loginForm" novalidate>
       <label for="email">Email</label>
-      <input type="email" id="email" autocomplete="email" required>
+      <input type="email" id="email" required>
 
       <label for="password">Password</label>
-      <input type="password" id="password" autocomplete="current-password" required>
+      <input type="password" id="password" required minlength="6">
 
-      <label class="show"><input type="checkbox" id="showPassword"> Show password</label>
-
-      <p class="error" id="error" role="alert"></p>
-
-      <button type="submit" class="login">Log in</button>
+      <p id="message"></p>
+      <button type="submit" id="submit-btn">Log in</button>
     </form>
 
-    <p class="links">
-      <a href="index.html">Continue without logging in</a>
+    <p>
+      <span id="switch-text">No account yet?</span>
+      <a href="#" id="switch-link">Create account</a>
     </p>
   </main>
 
-  <script>
-    const form = document.getElementById("loginForm");
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const error = document.getElementById("error");
-
-    document.getElementById("showPassword").addEventListener("change", e => {
-      password.type = e.target.checked ? "text" : "password";
-    });
-
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-
-      if (!email.value.includes("@")) {
-        error.textContent = "Enter a valid email address.";
-        email.focus();
-        return;
-      }
-      if (password.value.length < 6) {
-        error.textContent = "Password must be at least 6 characters.";
-        password.focus();
-        return;
-      }
-
-      error.textContent = "";
-      // Demo only: there is no real account check yet.
-      // A real login needs a backend (for example Firebase or Supabase).
-      window.location.href = "index.html";
-    });
-  </script>
+  <script src="login.js"></script>
 </body>
 </html>
