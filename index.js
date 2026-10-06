@@ -9,7 +9,7 @@
   { name:"Evergarden Café", area:"Payompon", power:"Unknown", open:9, close:21, wifi:false, free:false,
     image:"images/evergarden.jpg",
     notes:"Boning Avenue. Hours, WiFi and backup power not confirmed. Ask before you go." },
-  { name:"Occidental Mindoro National High School", area:"Payompon", power:"Unknown", open:7, close:17, wifi:false, free:true,
+  { name:"Occidental Mindoro National High School", area:"Payompon", power:"Generator", open:7, close:17, wifi:false, free:true,
     image:"images/omnhs.jpg",
     notes:"National Road. Likely students only. Check with the school." }
 ];
