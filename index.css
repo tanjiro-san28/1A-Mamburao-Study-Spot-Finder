@@ -165,3 +165,129 @@ footer { background:var(--ink); color:#c3cddd; padding:24px 0; font-size:.95rem;
   cursor: pointer;
 }
 .sg-view { width: 100%; margin-top: 8px; font-family: monospace; }
+/* =========================
+   LOCATION CARDS
+   ========================= */
+
+.spot {
+  overflow: hidden;
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  transition: 0.25s ease;
+}
+
+.spot:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+}
+
+/* IMAGE */
+.spot-image-box {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+}
+
+.spot-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.spot:hover .spot-image {
+  transform: scale(1.05);
+}
+
+/* OPEN/CLOSED BADGE */
+.status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 7px 12px;
+  background: white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.status-badge.open {
+  color: #16803c;
+}
+
+.status-badge.closed {
+  color: #b42318;
+}
+
+/* CARD CONTENT */
+.spot-content {
+  padding: 18px;
+}
+
+.spot-content h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #172033;
+}
+
+.spot-location {
+  margin: 6px 0 15px;
+  color: #777;
+  font-size: 14px;
+}
+
+/* TAGS */
+.spot-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 15px;
+}
+
+.tag {
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* HOURS */
+.spot-hours {
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #444;
+}
+
+/* NOTES */
+.spot-content .notes {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 14px 0;
+}
+
+/* BUTTON */
+.details-btn {
+  width: 100%;
+  border: none;
+  padding: 11px;
+  border-radius: 10px;
+  background: #1769aa;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.details-btn:hover {
+  background: #0f4f82;
+}

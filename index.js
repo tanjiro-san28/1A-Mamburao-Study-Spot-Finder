@@ -1,10 +1,17 @@
 /* Replace these samples with real places. power: Generator, Inverter, Solar, or None. open/close: 24-hour time. */
-const spots = [
-  { name:"Sample Spot A (public library)", area:"Poblacion", power:"Generator", open:8, close:17, wifi:true,  free:true,  notes:"Quiet reading room. Replace with a real place." },
-  { name:"Sample Spot B (cafe)",           area:"Poblacion", power:"Inverter",  open:9, close:22, wifi:true,  free:false, notes:"Order a drink to stay. Replace with a real place." },
-  { name:"Sample Spot C (school hall)",    area:"Payompon",  power:"Generator", open:7, close:20, wifi:false, free:true,  notes:"Open to students only. Replace with a real place." },
-  { name:"Sample Spot D (church hall)",    area:"Tayamaan",  power:"None",      open:8, close:18, wifi:false, free:true,  notes:"Bright by day, no power at night. Replace with a real place." },
-  { name:"Sample Spot E (barangay hall)",  area:"Fatima",    power:"Solar",     open:8, close:21, wifi:true,  free:true,  notes:"Small room with a few tables. Replace with a real place." }
+  const spots = [
+  { name:"OMSU Mamburao Campus", area:"Tayamaan", power:"Generator", open:8, close:17, wifi:true, free:true,
+    image:"images/omsu.jpg",
+    notes:"Free DICT WiFi listed (2020). Check with the campus if students or visitors can study here and if they have a generator." },
+  { name:"Provincial Capitol", area:"Mamburao", power:"Generator", open:8, close:17, wifi:true, free:true,
+    image:"images/capitol.jpg",
+    notes:"Free DICT WiFi listed (2020). Check if the public can stay and if there is backup power." },
+  { name:"Evergarden Café", area:"Payompon", power:"Unknown", open:9, close:21, wifi:false, free:false,
+    image:"images/evergarden.jpg",
+    notes:"Boning Avenue. Hours, WiFi and backup power not confirmed. Ask before you go." },
+  { name:"Occidental Mindoro National High School", area:"Payompon", power:"Unknown", open:7, close:17, wifi:false, free:true,
+    image:"images/omnhs.jpg",
+    notes:"National Road. Likely students only. Check with the school." }
 ];
 
 const $ = id => document.getElementById(id);
@@ -37,15 +44,54 @@ function matches(s) {
 }
 
 function card(s) {
-  const p = s.power !== "None", o = isOpen(s);
-  return `<article class="spot ${p ? "has-power" : ""}">
-    <div class="top"><div><h2>${s.name}</h2><p class="area">${s.area}</p></div>
-      <span class="status ${o ? "open" : ""}">${o ? "Open now" : "Closed now"}</span></div>
-    <div class="power"><span class="lamp"></span>${p ? "Backup power: " + s.power : "No backup power"}</div>
-    <ul class="facts"><li>${hour(s.open)} to ${hour(s.close)}</li>
-      <li class="${s.wifi ? "yes" : ""}">${s.wifi ? "Wi-Fi" : "No Wi-Fi"}</li>
-      <li class="${s.free ? "yes" : ""}">${s.free ? "Free" : "Paid"}</li></ul>
-    <p class="notes">${s.notes}</p></article>`;
+  const p = s.power !== "None";
+  const o = isOpen(s);
+
+  return `
+    <article class="spot">
+
+      <div class="spot-image-box">
+        <img src="${s.image}" alt="${s.name}" class="spot-image">
+        
+        <span class="status-badge ${o ? "open" : "closed"}">
+          ${o ? "● Open now" : "● Closed now"}
+        </span>
+      </div>
+
+      <div class="spot-content">
+
+        <h2>${s.name}</h2>
+
+        <p class="spot-location">📍 ${s.area}</p>
+
+        <div class="spot-tags">
+          <span class="tag">
+            ⚡ ${p ? "Backup power: " + s.power : "No backup power"}
+          </span>
+
+          <span class="tag">
+            ${s.wifi ? "📶 Wi-Fi" : "🚫 No Wi-Fi"}
+          </span>
+
+          <span class="tag">
+            ${s.free ? "✓ Free" : "₱ Paid"}
+          </span>
+        </div>
+
+        <div class="spot-hours">
+          🕐 ${hour(s.open)} – ${hour(s.close)}
+        </div>
+
+        <p class="notes">${s.notes}</p>
+
+        <button class="details-btn" onclick="showDetails('${s.name}')">
+          View Details →
+        </button>
+
+      </div>
+
+    </article>
+  `;
 }
 
 function render() {
@@ -83,3 +129,18 @@ if (current) {
   auth.append(hello, logout);
 }// Change this to your card's class name (see note below)
 const CARD_SELECTOR = "#spots article, #spots li, #spots .card, #spots .spot, #spots .spot-card";
+function showDetails(name) {
+  const spot = spots.find(s => s.name === name);
+
+  if (!spot) return;
+
+  alert(
+    spot.name +
+    "\n\n📍 " + spot.area +
+    "\n⚡ Power: " + spot.power +
+    "\n📶 Wi-Fi: " + (spot.wifi ? "Yes" : "No") +
+    "\n💰 " + (spot.free ? "Free" : "Paid") +
+    "\n🕐 " + hour(spot.open) + " – " + hour(spot.close) +
+    "\n\n" + spot.notes
+  );
+}
