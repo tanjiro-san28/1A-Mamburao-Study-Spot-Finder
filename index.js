@@ -1,6 +1,6 @@
 /* Replace these samples with real places. power: Generator, Inverter, Solar, or None. open/close: 24-hour time. */
   const spots = [
-  { name:"OMSU Mamburao Campus", area:"Tayamaan", power:"Generator", open:8, close:17, wifi:true, free:true,
+  { name:"OMSU Mamburao Campus", area:"Tayamaan", power:"Generator", open:7, close:20,wifi:true, free:true,
     image:"images/omsu.jpg",
     notes:"Free DICT WiFi listed (2020). Check with the campus if students or visitors can study here and if they have a generator." },
   { name:"Provincial Capitol", area:"Mamburao", power:"Generator", open:8, close:17, wifi:true, free:true,
@@ -16,7 +16,8 @@
 
 const $ = id => document.getElementById(id);
 const active = { openNow:false, backupPower:false, openLate:false, wifi:false, free:false };
-const nowHour = () => new Date().getHours();
+   const nowHour = () =>
+     Number(new Intl.DateTimeFormat("en-US", { hour: "numeric", hour12: false, timeZone: "Asia/Manila" }).format(new Date())) % 24;
 const isOpen = s => nowHour() >= s.open && nowHour() < s.close;
 
 // Login state (demo, saved by Login.html)
