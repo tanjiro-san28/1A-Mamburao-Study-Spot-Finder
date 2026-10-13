@@ -1,5 +1,7 @@
 let mode = "login"; // "login" or "signup"
-
+const passwordLabel = document.getElementById("password-label");
+const forgotRow = document.getElementById("forgot-row");
+const forgotLink = document.getElementById("forgot-link");
 const title = document.getElementById("form-title");
 const form = document.getElementById("auth-form");
 const nameRow = document.getElementById("name-row");
@@ -22,14 +24,24 @@ function showMessage(text, isError = true) {
 
 function updateUI() {
   const signup = mode === "signup";
-  title.textContent = signup ? "Create account" : "Log in";
-  submitBtn.textContent = signup ? "Create account" : "Log in";
-  switchText.textContent = signup ? "Already have an account?" : "No account yet?";
-  switchLink.textContent = signup ? "Log in" : "Create account";
+  const reset = mode === "reset";
+  title.textContent = signup ? "Create account" : reset ? "Reset password" : "Log in";
+  submitBtn.textContent = title.textContent;
+  passwordLabel.textContent = reset ? "New password" : "Password";
+  switchText.textContent = signup ? "Already have an account?" : reset ? "Remembered it?" : "No account yet?";
+  switchLink.textContent = signup || reset ? "Log in" : "Create account";
+  forgotRow.hidden = mode !== "login";
   nameRow.hidden = !signup;
   nameInput.required = signup;
   message.textContent = "";
 }
+
+forgotLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  mode = "reset";
+  updateUI();
+});
+
 
 switchLink.addEventListener("click", (e) => {
   e.preventDefault();
@@ -43,7 +55,20 @@ form.addEventListener("submit", (e) => {
   const email = emailInput.value.trim().toLowerCase();
   const password = passwordInput.value;
   const users = getUsers();
-
+if (mode === "reset") {
+  const found = users.find((u) => u.email === email);
+  if (!found) {
+    showMessage("No account with that email.");
+    return;
+  }
+  found.password = password;
+  localStorage.setItem("users", JSON.stringify(users));
+  mode = "login";
+  updateUI();
+  passwordInput.value = "";
+  showMessage("Password updated. You can log in now.", false);
+  return;
+}
   if (mode === "signup") {
     if (users.some((u) => u.email === email)) {
       showMessage("That email is already registered.");

@@ -1,6 +1,5 @@
 (function () {
-  console.log("modal.js v2 loaded");
-
+  
   const overlay = document.createElement("div");
   overlay.className = "modal-overlay";
   overlay.hidden = true;
