@@ -1,11 +1,11 @@
 const spots = [
-  { name:"OMSU Mamburao Campus", area:"Tayamaan", power:"Generator", open:7, close:20,wifi:true, free:true,
+  { name:"OMSU Mamburao Campus", area:"Tayamaan", power:"Generator", open:7, close:21,wifi:true, free:true,
     image:"images/omsu.jpg",
     notes:"Free DICT WiFi listed (2020). Check with the campus if students or visitors can study here and if they have a generator." },
   { name:"Provincial Capitol", area:"Mamburao", power:"Generator", open:8, close:17, wifi:true, free:true,
     image:"images/capitol.jpg",
     notes:"Free DICT WiFi listed (2020). Check if the public can stay and if there is backup power." },
-  { name:"Evergarden Café", area:"Payompon", power:"Generator", open:9, close:21, wifi:false, free:false,
+  { name:"Evergarden Café", area:"Payompon", power:"Generator", open:9, close:21, wifi:true, free:false,
     image:"images/evergarden.jpg",
     notes:"Boning Avenue. Hours, WiFi and backup power not confirmed. Ask before you go." },
   { name:"Occidental Mindoro National High School", area:"Payompon", power:"Generator", open:7, close:17, wifi:true, free:true,

@@ -2,7 +2,6 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin:0; background:var(--paper); color:var(--ink); font-family:"Atkinson Hyperlegible",system-ui,Arial,sans-serif; line-height:1.5; }
-.wrap { max-width:1000px; margain:0 auto; padding:0 20px; }
 :focus-visible { outline:3px solid var(--lamp); outline-offset:2px; }
 
 /* Hero with background image (put background.png in the same folder) */
